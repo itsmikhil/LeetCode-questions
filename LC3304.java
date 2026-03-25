@@ -19,3 +19,12 @@ class Solution {
         return str.charAt(k-1);
     }
 }
+
+// optimal
+class Solution {
+    
+    public char kthCharacter(int k) {
+        // counts the number of 1's and adds it with 'a'
+        return (char)('a'+Integer.bitCount(k-1));
+    }
+}

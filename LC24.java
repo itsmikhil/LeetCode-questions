@@ -1,3 +1,23 @@
+// kaafi serious recursion applied
+// but easy hai thodha samjho
+class Solution {
+    ListNode func(ListNode temp){
+        if(temp==null || temp.next==null){
+            return temp;
+        }
+        ListNode store=temp.next;
+        temp.next=func(temp.next.next);
+        store.next=temp;
+        return store;
+    }
+    public ListNode swapPairs(ListNode head) {
+        if(head==null || head.next==null){
+            return head;
+        }
+        return func(head);
+    }
+}
+
 class Solution {
     public ListNode swapPairs(ListNode head) {
         // 1->2->3->4->x

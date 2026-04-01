@@ -17,3 +17,36 @@ class Solution {
         return max;
     }
 }
+
+class Solution {
+    public int pairSum(ListNode head) {
+        // approach 2-reverse 2nd half
+        ListNode slow=head;
+        ListNode fast=head.next;
+        int size=0;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+            size++;
+        }
+        ListNode prev=slow;
+        ListNode curr=slow.next;
+        ListNode next=null;
+        while(curr!=null){
+            next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        ListNode temp=head;
+        ListNode right=prev;
+        ListNode left=head;
+        int max=0;
+        for(int i=0;i<size+1;i++){
+            max=Math.max(max,left.val+right.val);
+            left=left.next;
+            right=right.next;
+        }
+        return max;
+    }
+}

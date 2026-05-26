@@ -1,5 +1,15 @@
 class Solution {
     public String removeKdigits(String num, int k) {
+            //->start traversal from 0 to n-1
+            // keeping putting elements inside the stack 
+            // a smaller element pops the prev bigger element 
+            // when k elements are popped then we stop popping and they are directly considered part of ans
+            // edge case:-
+            // if string is 12345
+            // here no elemenst will be popped
+            // thats here we pop the last k elements 
+            // because they are anyways in descending order and els at end will be greater thats why we are facing this scenario
+            // also we have to remove leading zeroes afterward
         if(k==num.length()){
             return "0";
         }
@@ -22,7 +32,7 @@ class Solution {
         while(!s.isEmpty()){
             sb.append(s.pop());
         }
-        // important
+        // important  --->Note
          sb.reverse();
 
         // remove leading zeros

@@ -32,6 +32,7 @@ class Solution {
 // optimal:-
 class Solution {
     public int lengthOfLongestSubstring(String s) {
+        // opptimal TC:- O(n) 
         // left and right pointer => both start from 0
         // abcdabcde
         // keep moving right and and storing index of chracters
@@ -41,6 +42,8 @@ class Solution {
         // isliye hum hume woh repaeated element ko hatana hai
         // isliye hum left=hashmap se jo index mila hai plus 1 pe move kar dete hai 
         // here left moved to 1(because prev 'a' was on index 0 so, 0+1)
+
+        // NOTE:- here we can take array of size 256 so that  look up time is constant instead of logn in hashmap
         if(s.length()==0){
             return 0;
         }

@@ -1,55 +1,53 @@
 class Solution {
+    // Approach:
+    // Any 'O' that is connected to a boundary 'O' (directly or indirectly)
+    // can never be converted into 'X'.
+    //
+    // So, we start DFS from every boundary 'O' and mark all the connected 'O's.
+    //
+    // After the traversal is complete,
+    // any remaining unvisited 'O' must be completely surrounded,
+    // so we convert it to 'X'.
 
-    void DFS(int i,int j,char board[][],boolean vis[][]){
-        // returning when illegal index or node is already visited or node is not 'O'
-        if(i<0 || i>=board.length || j<0 || j>=board[0].length || vis[i][j]==true || board[i][j]!='O' ){
-            return;
+    // TC:- O(m+n){row anc col check }+O(m×n){DFS in worst}+O(m×n){final traversal}=O(m×n)
+    void dfs(char[][] board,boolean vis[][],int m, int n){
+        vis[m][n]=true;
+        int dirs[][]={{0,1},{1,0},{-1,0},{0,-1}};
+        for(int i=0;i<dirs.length;i++){
+            int nx=m+dirs[i][0];
+            int ny=n+dirs[i][1];
+            if(nx>=0 && nx<board.length && ny>=0 && ny<board[0].length && board[nx][ny]=='O' && vis[nx][ny]==false){
+                dfs(board,vis,nx,ny);
+            }
         }
-
-        vis[i][j]=true;
-        DFS(i-1,j,board,vis);
-        DFS(i+1,j,board,vis);
-        DFS(i,j+1,board,vis);
-        DFS(i,j-1,board,vis);
     }
-
     public void solve(char[][] board) {
-        int n=board.length;
-        int m=board[0].length;
-        boolean vis[][]=new boolean[n][m];
-
-        // boundary o se dfs traversal start karo aur uske through jo bhi inside o accesible hai unhe visited mark 
-        // karo
-        // jo bach gaya woh connected nhi hao boundary o se means unge hum x bana denge 
-
-        // calling for first and last col
-        for(int i=0;i<n;i++){
+        boolean vis[][]=new boolean[board.length][board[0].length];
+        // checking for boundary row 
+        for(int i=0;i<board[0].length;i++){
+            if(board[0][i]=='O' && vis[0][i]==false){
+                dfs(board,vis,0,i);
+            }
+            if(board[board.length-1][i]=='O' && vis[board.length-1][i]==false){
+                dfs(board,vis,board.length-1,i);
+            }
+        }
+        // checking for boundary col 
+        for(int i=0;i<board.length;i++){
             if(board[i][0]=='O' && vis[i][0]==false){
-                DFS(i,0,board,vis);
+                dfs(board,vis,i,0);
             }
-            if(board[i][m-1]=='O' && vis[i][m-1]==false){
-                DFS(i,m-1,board,vis);
-            }
-        }
-
-        // calling for first and last row
-        for(int j=0;j<m;j++){
-            if(board[0][j]=='O' && vis[0][j]==false){
-                DFS(0,j,board,vis);
-            }
-            if(board[n-1][j]=='O' && vis[n-1][j]==false){
-                DFS(n-1,j,board,vis);
+            if(board[i][board[0].length-1]=='O' && vis[i][board[0].length-1]==false){
+                dfs(board,vis,i,board[0].length-1);
             }
         }
-
-        // if someone is left means it is not connected to any boundary o 
-        // therefore it is chnaged to x
-        for(int i=1;i<n;i++){
-            for(int j=1;j<m;j++){
+        for(int i=0;i<board.length;i++){
+            for(int j=0;j<board[0].length;j++){
                 if(board[i][j]=='O' && vis[i][j]==false){
                     board[i][j]='X';
                 }
             }
         }
     }
+
 }

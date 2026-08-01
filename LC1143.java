@@ -23,7 +23,7 @@ class Solution {
     // Better
     // Memoization
     // Tc:o(n*m)
-    // Sc: o(n*m)
+    // Sc: o(n*m) + Stack Space
     int longestLength(String s1,String s2,int idx1,int idx2,int dp[][]){
         if(idx1>=s1.length() || idx2>=s2.length()) return 0;
         if(dp[idx1][idx2]!=-1) return dp[idx1][idx2];

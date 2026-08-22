@@ -74,3 +74,37 @@ class Solution {
         return ans[0];
     }
 }
+
+class Solution {
+    // Space Optmixation using prev and curr
+    // we keep a ans var which gives track of max
+    // if equal then only plus 1
+    // otherwise 0
+    
+    // Time Complexity:  O(n * m)
+
+    // Space Complexity: O( m) 
+    
+    public int longCommSubstr(String s1, String s2) {
+        
+        // NOTE sirf second string ki length ka bana rahe hai
+        int prev[]=new int[s2.length()+1];
+        prev[0]=0;
+
+        int ans[]=new int[1];
+
+        for(int i=1;i<=s1.length();i++){
+            int curr[]=new int[s2.length()+1];
+            curr[0]=0;
+            for(int j=1;j<=s2.length();j++){
+                if(s1.charAt(i-1)==s2.charAt(j-1)){
+                    curr[j]=1+prev[j-1];
+                    ans[0]=Math.max(ans[0],curr[j]);
+                }
+            }
+            prev=curr;
+        }
+
+        return ans[0];
+    }
+}

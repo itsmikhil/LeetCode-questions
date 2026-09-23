@@ -71,3 +71,62 @@ class Solution {
         return ans;
     }
 }
+
+class Solution {
+    
+    // ONLY VALID FOR DAG
+    
+    // toposort ko agar bfs ke saath kare toh kahns algo
+    
+    // here we keep track of numberOfIncomingEdgesForEachNode
+    // S1: if somone has zero incmoing edges matlab usse dusro pe edge jaati hai
+    // add it in queue
+    // s2: while doing bfs jo bhi neigh ho popped node ka uske incmoingEdges ko decrement karo
+    // agar zero ho jaaye toh usse bhi q mai daalo
+    
+    // bas yahi hai
+    
+    // tc: o(v+e)
+    public ArrayList<Integer> topoSort(int V, int[][] edges) {
+        
+        Queue<Integer> q=new LinkedList<>();
+        int incomingEdgesCount[]=new int[V];
+        ArrayList<ArrayList<Integer>> list=new ArrayList<>();
+        for(int i=0;i<V;i++){
+            list.add(new ArrayList<>());
+        }
+        for(int i=0;i<edges.length;i++){
+            int u=edges[i][0];
+            int v=edges[i][1];
+            list.get(u).add(v);
+            incomingEdgesCount[v]++;
+        }
+        boolean vis[]=new boolean[V];
+        ArrayList<Integer> ans=new ArrayList<>();
+        for(int i=0;i<V;i++){
+            if(incomingEdgesCount[i]==0){
+                q.add(i);
+                vis[i]=true;
+                ans.add(i);
+            }
+        }
+        
+        
+        while(!q.isEmpty()){
+            int currNode=q.poll();
+            for(int neigh:list.get(currNode)){
+                if(vis[neigh]==false){
+                    incomingEdgesCount[neigh]--;
+                    if(incomingEdgesCount[neigh]==0){
+                        q.add(neigh);
+                        vis[neigh]=true;
+                        ans.add(neigh);
+                    }
+                }
+            }
+        }
+        
+        return ans;
+        
+    }
+}

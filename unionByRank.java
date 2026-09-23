@@ -1,4 +1,10 @@
 class DisjointSet {
+
+        // use when you're repeatedly connecting/checking components with DSU
+        // Time complexity is (4alpha)
+        // while dfs and bfs is v+e
+        // DSU ki specilaity hai ki woh ultparent constant time mai batata hai
+
         int n;
         ArrayList<Integer> size;
         ArrayList<Integer> parent;
@@ -16,6 +22,7 @@ class DisjointSet {
             }
         }
 
+        // path compression
         int findUltParent(int m){
             if(m==parent.get(m)) return m;
 
